@@ -302,7 +302,7 @@ class _ApplyDialogState extends State<ApplyDialog> {
                                         child: (language == Language.es)
                                             ? const Text(
                                                 'Instalador de tubería')
-                                            : const Text('Fitters pipe')),
+                                            : const Text('Pipe Fitters')),
                                     DropdownMenuItem(
                                         value: 'sheetmetal',
                                         child: (language == Language.es)

@@ -7,7 +7,8 @@ class LunaApi {
 
   static void configureDio() {
     // Base del url
-    _dio.options.baseUrl = 'http://localhost:8080/api';
+    _dio.options.baseUrl = 'https://lunabackend-6929da72a4c1.herokuapp.com/api';
+    // _dio.options.baseUrl = 'http://localhost:8080/api';
   }
 
   static Future httpGet(String path) async {
