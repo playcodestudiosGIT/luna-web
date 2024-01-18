@@ -43,6 +43,11 @@ class Footer extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .bodyLarge!
+                          .copyWith(color: bgColor)),
+                  Text('lunaaconstruccion@gmail.com',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
                           .copyWith(color: bgColor))
                 ],
                 if (language == Language.es) ...[
@@ -65,7 +70,12 @@ class Footer extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .bodyLarge!
-                          .copyWith(color: bgColor))
+                          .copyWith(color: bgColor)),
+                  Text('lunaaconstruccion@gmail.com',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: bgColor)),
                 ]
               ]),
         ),

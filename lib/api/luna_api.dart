@@ -3,8 +3,7 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 
 class LunaApi {
-  static Dio _dio = new Dio();
-
+  static final Dio _dio = Dio();
   static void configureDio() {
     // Base del url
     _dio.options.baseUrl = 'https://lunabackend-6929da72a4c1.herokuapp.com/api';
@@ -17,7 +16,6 @@ class LunaApi {
 
       return resp.data;
     } catch (e) {
-      print(e);
       throw ('Error en el GET');
     }
   }
@@ -29,7 +27,6 @@ class LunaApi {
       final resp = await _dio.post(path, data: formData);
       return resp.data;
     } catch (e) {
-      print(e);
       throw ('Error en el POST');
     }
   }
@@ -41,7 +38,6 @@ class LunaApi {
       final resp = await _dio.put(path, data: formData);
       return resp.data;
     } catch (e) {
-      print(e);
       throw ('Error en el PUT');
     }
   }
@@ -53,46 +49,40 @@ class LunaApi {
       final resp = await _dio.delete(path, data: formData);
       return resp.data;
     } catch (e) {
-      print(e);
       throw ('Error en el delete');
     }
   }
 
   static Future<void> createApply(
-      {required Uint8List idFileBytes,
-      required Uint8List itinFileBytes,
-      required Uint8List ssFileBytes,
-      required Uint8List osha10FileBytes,
-      required String nombre,
-      required String apellido,
-      required String email,
-      required String direccion,
-      required String telf,
-      required String specialty
-      
+      {
+        required Uint8List idFileBytes,
+        required Uint8List itinFileBytes,
+        required Uint8List osha10FileBytes,
+        required String nombre,
+        required String apellido,
+        required String email,
+        required String direccion,
+        required String telf,
+        required String specialty,
+        required String ss
       }) async {
     FormData formData = FormData.fromMap({
-      "fileId": MultipartFile.fromBytes(idFileBytes,
-          filename: 'ID'),
-      "fileItin": MultipartFile.fromBytes(itinFileBytes,
-          filename: 'Itin'),
-      "fileSs": MultipartFile.fromBytes(ssFileBytes,
-          filename: 'Ss'),
-      "fileOsha": MultipartFile.fromBytes(osha10FileBytes,
-          filename: 'Osha'),
+      "fileId":  MultipartFile.fromBytes(idFileBytes, filename: 'ID'),
+      "fileItin": MultipartFile.fromBytes(itinFileBytes, filename: 'Itin'),
+      "fileOsha": MultipartFile.fromBytes(osha10FileBytes, filename: 'Osha'),
       "nombre": nombre,
       "apellido": apellido,
       "email": email,
       "direccion": direccion,
       "telf": telf,
-      "specialty": specialty
+      "specialty": specialty,
+      "ss": ss,
     });
 
     try {
-      final resp = await _dio.post('/apply', data: formData);
-      print(resp);
+      await _dio.post('/apply', data: formData);
     } catch (e) {
-      print('ERROR ---  $e');
+      // print(e);
     }
   }
 }

@@ -23,7 +23,7 @@ class HomeView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Text(
-                  'Providing high quality services for our commercial and industrial clients',
+                  'Providing high quality services for our commercial and industrial clients',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineMedium),
             ),
@@ -47,7 +47,7 @@ class HomeView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Text(
-                  'If you have knowledge about plumbing, electricity, or any construction work, apply to work with us.',
+                  'Join our team and be part of this nice and friendly inviroment, apply now.',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyLarge),
             )
@@ -60,7 +60,7 @@ class HomeView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               constraints: const BoxConstraints(maxWidth: 800),
               child: Text(
-                  'Si tienes conocimientos sobre plomería, electricidad o cualquier trabajo de construcción, postúlate para trabajar con nosotros.',
+                  'Únete a nuestro equipo y forma parte de este ambiente agradable y amigable, postule ahora.',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyLarge),
             )

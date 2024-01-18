@@ -35,10 +35,9 @@ String direccion = '';
 String email = '';
 String telf = '';
 String specialty = '';
-late final Uint8List idFileBytes;
-late final Uint8List itinFileBytes;
-late final Uint8List ssFileBytes;
-late final Uint8List osha10FileBytes;
+Uint8List idFileBytes = Uint8List(0);
+Uint8List itinFileBytes = Uint8List(0);
+Uint8List osha10FileBytes = Uint8List(0);
 
 final _formKey = GlobalKey<FormState>();
 
@@ -271,6 +270,29 @@ class _ApplyDialogState extends State<ApplyDialog> {
                                             : const Text('Correo')),
                                     onChanged: (value) => email = value,
                                   )),
+                              const SizedBox(height: 15),
+                              Container(
+                                  constraints:
+                                      const BoxConstraints(maxWidth: 400),
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                        border: const OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: primaryColor),
+                                        ),
+                                        focusedBorder: const OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: primaryColor),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: primaryColor
+                                                    .withOpacity(0.3))),
+                                        label: (language == Language.en)
+                                            ? const Text('Social Security')
+                                            : const Text('Social Security')),
+                                    onChanged: (value) => ss = value,
+                                  )),
                               const SizedBox(height: 30),
                               Container(
                                 constraints:
@@ -411,7 +433,7 @@ class _ApplyDialogState extends State<ApplyDialog> {
                                           FilePickerResult? result =
                                               await FilePicker.platform
                                                   .pickFiles(
-                                                    type: FileType.custom,
+                                                      type: FileType.custom,
                                                       allowedExtensions: [
                                                         'png',
                                                         'jpg',
@@ -459,70 +481,6 @@ class _ApplyDialogState extends State<ApplyDialog> {
                                 child: Row(
                                   children: [
                                     Expanded(
-                                        child: (ss == '')
-                                            ? (language == Language.es)
-                                                ? const Text(
-                                                    'Seleccione Social Security')
-                                                : const Text(
-                                                    'Select Social Security')
-                                            : Text(ss)),
-                                    const SizedBox(width: 15),
-                                    ElevatedButton(
-                                        style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    primaryColor)),
-                                        onPressed: () async {
-                                          FilePickerResult? result =
-                                              await FilePicker.platform
-                                                  .pickFiles(
-                                                    type: FileType.custom,
-                                                      allowedExtensions: [
-                                                        'png',
-                                                        'jpg',
-                                                        'jpeg',
-                                                        'pdf'
-                                                      ],
-                                                      allowMultiple: false);
-
-                                          if (result != null) {
-                                            PlatformFile file =
-                                                result.files.first;
-
-                                            if (file.size > 5000000) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                SnackBar(
-                                                    content: (language ==
-                                                            Language.es)
-                                                        ? const Text(
-                                                            'El Archivo es muy grande')
-                                                        : const Text(
-                                                            'The archive is very large')),
-                                              );
-                                              return;
-                                            }
-
-                                            ss = file.name;
-
-                                            ssFileBytes = file.bytes!;
-                                            setState(() {});
-                                          } else {
-                                            // User canceled the picker
-                                          }
-                                        },
-                                        child: const Icon(Icons.security,
-                                            color: bgColor)),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(height: 30),
-                              Container(
-                                constraints:
-                                    const BoxConstraints(maxWidth: 400),
-                                child: Row(
-                                  children: [
-                                    Expanded(
                                         child: (osha10 == '')
                                             ? (language == Language.es)
                                                 ? const Text(
@@ -539,7 +497,7 @@ class _ApplyDialogState extends State<ApplyDialog> {
                                           FilePickerResult? result =
                                               await FilePicker.platform
                                                   .pickFiles(
-                                                    type: FileType.custom,
+                                                      type: FileType.custom,
                                                       allowedExtensions: [
                                                         'png',
                                                         'jpg',
@@ -596,26 +554,23 @@ class _ApplyDialogState extends State<ApplyDialog> {
                                         ),
                                   onPressed: () async {
                                     if (_formKey.currentState!.validate()) {
-                                      if (id != '' &&
-                                          itin != '' &&
-                                          ss != '' &&
-                                          osha10 != '') {
-                                        isLoading = true;
+                                      isLoading = true;
                                         setState(() {});
                                         await LunaApi.createApply(
                                             idFileBytes: idFileBytes,
                                             itinFileBytes: itinFileBytes,
-                                            ssFileBytes: ssFileBytes,
                                             osha10FileBytes: osha10FileBytes,
                                             nombre: nombre,
                                             apellido: apellido,
                                             email: email,
                                             direccion: direccion,
                                             telf: telf,
-                                            specialty: specialty);
+                                            specialty: specialty,
+                                            ss: ss);
                                         isLoading = false;
                                         isComplete = true;
                                         setState(() {});
+                                        
                                       } else {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
@@ -626,7 +581,7 @@ class _ApplyDialogState extends State<ApplyDialog> {
                                                   : const Text(
                                                       'Some documents are missing')),
                                         );
-                                      }
+                                      
                                     }
                                   },
                                   icon: const Icon(Icons.send, color: bgColor))
